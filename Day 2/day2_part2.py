@@ -19,18 +19,17 @@ class submarine: #Class that holds the horizontal position, depth, and aim value
         self.depth = self.depth + self.aim*horizontal
     def travel_vertical(self, aim): #Changes aim value
         self.aim +=aim
+    def travel(self, direction, distance): #Function that sends direction and distance to submarine
+        if direction == 'forward':
+            submarine.travel_forward(self,distance)
+        elif direction =='up':
+            submarine.travel_vertical(self, -distance)
+        else:
+            submarine.travel_vertical(self, distance)
     def position(self): #Report current position
         return (self.horizontal * self.depth)
 
 
-
-def travel(direction, distance, submarine): #Function that sends direction and distance to submarine
-    if direction == 'forward':
-        submarine.travel_forward(distance)
-    elif direction =='up':
-        submarine.travel_vertical(-distance)
-    else:
-        submarine.travel_vertical(distance)
 
 
 elf_sub = submarine(0,0,0)
@@ -38,7 +37,7 @@ for line in contents: #Loops through every line of input
     split = line.find(' ')
     direction = line[:split]
     distance = int(line[split:])
-    travel(direction, distance, elf_sub )
+    elf_sub.travel(direction, distance)
 
 
 #Answer
