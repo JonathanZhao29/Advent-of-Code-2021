@@ -10,7 +10,7 @@ def depthIncr(depth1, depth2):
         return 0
 
 #Read input file
-with open('day1_input.txt') as file:
+with open('Day 1\day1_input.txt') as file:
     contents = file.readlines()
 
 #Loop through input and count increases
