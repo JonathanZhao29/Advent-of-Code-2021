@@ -6,10 +6,6 @@ with open('Day 5\day5_input.txt') as file:
 for value in range(len(contents)): #Strips the extra space after each value
     contents[value] = contents[value].strip()
 
-#Instructions
-#Hydrothermal vents in lines, x1,y1 -> x2,y2
-#Only horizontal and vertical lines
-#Determine the number of points where at least two lines overlap
 
 #Function to calculate each point in a line and returns an array of those points
 def calcLine(line):
@@ -39,6 +35,23 @@ def calcLine(line):
             for segment in range(x1-x2+1): #For each point, append it to the list of points
                 point = str(x2+segment)+','+str(y1)
                 points.append(point)
+    else: #Diagonal line
+        for segment in range(abs(x1-x2)+1): #If 45 degree diagonal, the abs distance between x1,x2 and y1,y2 are the same
+            if x1>x2: 
+                if y1>y2:
+                    point = str(x2+segment) + ',' + str(y2+segment) #Calculates each point on the diagonal
+                    points.append(point)
+                else:
+                    point = str(x2+segment) + ',' + str(y2-segment) #Calculates each point on the diagonal
+                    points.append(point)
+            else:
+                if y1>y2:
+                    point = str(x1+segment) + ',' + str(y1-segment) #Calculates each point on the diagonal
+                    points.append(point)
+                else:
+                    point = str(x1+segment) + ',' + str(y1+segment) #Calculates each point on the diagonal
+                    points.append(point)
+
     return points
 
 #Create a dictionary, then calculate where each line is and add each point in the line to the dict to count overlaps.
