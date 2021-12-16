@@ -1,6 +1,6 @@
 #Jonathan Zhao
 
-import numpy as np
+
 #Read input
 with open('Day 6\day6_input.txt') as file:
     contents = file.readlines()

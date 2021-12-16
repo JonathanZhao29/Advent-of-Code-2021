@@ -1,6 +1,6 @@
 #Jonathan Zhao
 
-import numpy as np
+
 #Read input
 with open('Day 6\day6_input.txt') as file:
     contents = file.readlines()
@@ -31,6 +31,5 @@ for day in range(256):
     #Producing more lantern fish
     school[6] = school[6] + parentFish #Parent lantern fish
     school[8] = parentFish #Newly produced lantern fish
-print(school)
 #Print Answer
-print(sum(school))
+print('Amount of lanternfish:',sum(school))
