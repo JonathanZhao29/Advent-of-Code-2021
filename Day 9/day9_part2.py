@@ -7,7 +7,6 @@ with open('Day 9\day9_input.txt') as file:
 #Adjust input and track bounds
 height = len(contents)
 width = len(contents[0])-2 #not counting \n
-print(contents[0])
 contents = ''.join(contents)
 values = [char for char in contents] 
 
