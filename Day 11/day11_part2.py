@@ -1,8 +1,6 @@
 #Jonathan Zhao's Code
 
 #Read input
-from os import pipe
-
 
 with open('Day 11\day11_input.txt') as file:
     contents = file.readlines()
