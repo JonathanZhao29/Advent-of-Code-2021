@@ -39,11 +39,11 @@ class caves():
             self.pathings.append(currentPath)
         else:
             #If not at the end
-            for possiblePath in self.paths[currentLoc]:
-                if possiblePath not in littles:
+            for possiblePath in self.paths[currentLoc]: #For each possible path from current location
+                if possiblePath not in littles: # If cave is not a little cave previously visited
                     self.findPaths(possiblePath, currentPath, littles)
-        currentPath.pop()
-        if currentLoc in littles:
+        currentPath.pop() #Remove the current location
+        if currentLoc in littles: #Removes the current location from the littles array
             littles.remove(currentLoc)
     
     def calcPaths(self): #Calls findPath and prints answer
