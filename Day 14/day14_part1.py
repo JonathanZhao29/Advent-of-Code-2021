@@ -28,10 +28,12 @@ def insertion(polymer, insertion_pairs): #Takes the polymer and dictionary of in
 for step in range(10):
     polymer = insertion(polymer, insertion_pairs)
 
+
 #Find most common and least common element and their count using Counter
 poly_count = Counter(polymer)
+
 most_common = poly_count.most_common()[0][1]
 least_common = poly_count.most_common()[-1][1]
 answer = most_common-least_common
 #Print Answer
-print(answer)
+print('difference between most common and least common:',answer)
