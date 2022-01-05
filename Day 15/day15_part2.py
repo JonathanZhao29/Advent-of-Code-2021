@@ -5,14 +5,49 @@
 import sys
 
 #Read input
-with open('Day 15\day15_test_input.txt') as file:
+with open('day15_input.txt') as file:
     contents = file.readlines()
 
 #Strip empty space from end of each line
 connections = [line.strip() for line in contents] 
-#Size of the 2d array
-size = len(connections)*len(connections[0])
 
+#Set up entire cave map
+#Function returns a 1 level higher cave map
+def increaseDimension(cave):
+    new_cave = ['' for x in range(len(cave))]
+    #Increase each risk value by 1
+    for row in cave:
+        rowValues = ''
+        for value in range(len(row)):
+            if int(row[value])+1 >9: #If higher than 9
+                rowValues +='1' #Set risk level to 1
+            else:
+                rowValues +=(str(int(row[value])+1)) #Increase risk level by 1
+        new_cave[cave.index(row)] = rowValues
+    return new_cave
+
+#Function that calculates the expanded row using base cave map, and adds it to the new map
+def expandRow(connections): #Takes original and new cave map
+    new_map = connections.copy() 
+    expanded_map = connections.copy() 
+    for size in range(4): # Expands to a total of x5 larger including original cave map
+        new_map = increaseDimension(new_map)
+        for row in range(len(connections)): #Adds that expanded cave map to the new cave map
+            expanded_map[row] +=new_map[row]
+    return expanded_map
+
+#Function that calculates the Full expanded cave map
+def fullMap(connections):
+    full_map = []
+    for size in range(5): # Expands to a total of x5 larger including original cave map
+        expanded_row = expandRow(connections)
+        for row in expanded_row:
+            full_map.append(row)
+        connections = increaseDimension(connections)
+    return full_map
+
+
+#Set up Cave graph class for Dijkstra's algorithm
 class CaveGraph():
  
     def __init__(self, vertices, riskGraph):
@@ -35,11 +70,11 @@ class CaveGraph():
  
         # Search nearest vertex not in the
         # shortest path tree
+        
         for u in range(self.V):
             if dist[u] < min and sptSet[u] == False:
                 min = dist[u]
                 min_index = u
- 
         return min_index
  
     #Return the the location and risk value of surrounding nodes
@@ -95,7 +130,7 @@ class CaveGraph():
         
         dist[src] = 0 #Starting Position
         sptSet = [False] * self.V #List of visited statuses, set to false 
- 
+        counter = 0
         for count in range(self.V):
  
             # Pick the minimum distance vertex from
@@ -106,7 +141,8 @@ class CaveGraph():
             # Put the minimum distance vertex in the
             # shortest path tree
             sptSet[minV] = True
- 
+            counter+=1
+            if counter %100 == 0: print(counter)
 
             #Find then surrounding nodes
             surrounding = self.surroundingNodes(minV)
@@ -123,7 +159,15 @@ class CaveGraph():
         
         #Print answer
         self.totalRisk(dist)
- 
+
+#Calculate the expanded cave map
+expanded_map = fullMap(connections)
+
+#Size of the 2d array
+size = len(expanded_map)*len(expanded_map[0])
+
+
 #Create the class and call the dijkstra algorithm starting at 0
-g = CaveGraph(size, connections)
-g.dijkstra(0)
+#shortestPath = CaveGraph(size, expanded_map)
+shortestPath = CaveGraph(size, expanded_map)
+shortestPath.dijkstra(0)
